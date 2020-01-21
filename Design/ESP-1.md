@@ -41,6 +41,20 @@
 
 
 ----
+## ESP Document 2
+## Customer Payments Against Orders
+
+### 0NF
+
+**PaymentsLog:** <span class="md"><b class="pk">OrderNumber</b>, OrderDate, OrderTotal, FirstName, LastName, CustomerNumber, <b class="rg">Date, PaymentAmount, PaymentNumber, BalanceOwing, PaymentType, DepositBatchNumber</b></span>
+
+### 1NF
+
+**PaymentsLog:** <span class="md"><b class="pk">OrderNumber</b>, OrderDate, OrderTotal, FirstName, LastName, CustomerNumber</span>
+
+**PaymentLogDetails:** <span class="md"><b class="pk"><u class="fk">OrderNumber</u>,PaymentNumber</b>, Date, PaymentAmount, BalanceOwing, PaymentType, DepositBatchNumber</span>
+
+
 
 
 
