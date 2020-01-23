@@ -38,7 +38,7 @@
 
 **Customer:** <span class="md"><b class="pk">CustomerNumber</b>, FirstName, LastName, Address, City, Province, PostalCode, Phone</span>
 
-
+![Customers Order View](./ERD-CustomersOrderView.png)
 
 ----
 ## ESP Document 2
