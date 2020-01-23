@@ -96,7 +96,7 @@ These are the tables/entities after normalizing the Payment Log View.
 ### ERD
 The following ERD for the Payment Log View is based on the final 3rd normal form.
 
-
+![Payment Log View](./ERD-PaymentLogView.png)
 
 
 
