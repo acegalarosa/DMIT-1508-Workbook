@@ -71,6 +71,31 @@ The following ERD for the Customer Orders View is based on the final 3rd normal 
 
 **PaymentLogDetails:** <span class="md"><b class="pk"><u class="fk">OrderNumber</u>,PaymentNumber</b>, Date, PaymentAmount, BalanceOwing, PaymentType, DepositBatchNumber</span>
 
+### 2NF
+After examining the PaymentLogDetails, there were no changes.
+
+### 3NF
+After performing Third-Normal Form, another table was generated: **Customer**.
+
+**Customer:** <span class="md"><b class="pk">CustomerNumber</b>, FirstName, LastName</span>
+
+**PaymentsLog:** <span class="md"><b class="pk">OrderNumber</b>, OrderDate, OrderTotal, <u class="fk">CustomerNumber</u>
+
+**PaymentLogDetails:** <span class="md"><b class="pk"><u class="fk">OrderNumber</u>, PaymentNumber</b>, Date, PaymentAmount, PaymentType, BalanceOwing, DepositBatchNumber</span>
+
+
+### Tables after 3rd Normal Form
+These are the tables/entities after normalizing the Payment Log View.
+
+**Customer:** <span class="md"><b class="pk">CustomerNumber</b>, FirstName, LastName</span>
+
+**PaymentsLog:** <span class="md"><b class="pk">OrderNumber</b>, OrderDate, OrderTotal, <u class="fk">CustomerNumber</u>
+
+**PaymentLogDetails:** <span class="md"><b class="pk"><u class="fk">OrderNumber</u>, PaymentNumber</b>, Date, PaymentAmount, PaymentType, BalanceOwing, DepositBatchNumber</span>
+
+### ERD
+The following ERD for the Payment Log View is based on the final 3rd normal form.
+
 
 
 
