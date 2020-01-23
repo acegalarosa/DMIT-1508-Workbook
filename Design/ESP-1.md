@@ -11,8 +11,11 @@
 *No changes to the entity/table in 1NF to 3NF.*
 
 ### ERD
+The following ERD represents the tables/entities from the **Customer Details View**. 
 
 ![Customers View](./ERD-CustomersView.png)
+
+----
 
 ## Customer Orders View
 
@@ -37,6 +40,20 @@
 **Order:** <span class="md"><b class="pk">OrderNumber</b>, <u class="fk">CustomerNumber</u>, Date, Subtotal, GST, Total</span>
 
 **Customer:** <span class="md"><b class="pk">CustomerNumber</b>, FirstName, LastName, Address, City, Province, PostalCode, Phone</span>
+
+### Tables after 3rd Normal Form
+These are the tables/entities after normalizing the Customer Details View.
+
+**Order:** <span class="md"><b class="pk">OrderNumber</b>,<u class="fk">CustomerNumber</u>, Date, Subtotal, GST, Total</span>
+
+**OrderDetail:** <span class="md"><b class="pk"><u class="fk">OrderNumber</u>, <u class="fk">ItemNumber</u></b>, Quantity, SellingPrice, Amount</span>
+
+**Item:** <span class="md"><b class="pk">ItemNumber</b>, Description, CurrentPrice</span>
+
+**Customer:** <span class="md"><b class="pk">CustomerNumber</b>, FirstName, LastName, Address, City, Province, PostalCode, Phone</span>
+
+### Customer Order View ERD
+The following ERD for the Customer Orders View is based on the final 3rd normal form.
 
 ![Customers Order View](./ERD-CustomersOrderView.png)
 
