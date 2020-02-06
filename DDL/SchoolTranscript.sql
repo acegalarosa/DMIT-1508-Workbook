@@ -49,7 +49,8 @@ CREATE TABLE Courses
             DEFAULT (1)             NOT NULL,
     Cost            money
 		CONSTRAINT CK_Courses_Cost
-			CHECK (Cost >= 0)       NOT NULL
+			CHECK (Cost >= 0)     
+								    NOT NULL
 )
 
 CREATE TABLE StudentCourses
