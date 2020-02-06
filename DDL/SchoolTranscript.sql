@@ -22,8 +22,23 @@ CREATE TABLE Students
             PRIMARY KEY
         IDENTITY(20200001, 1)       NOT NULL,
     GivenName       varchar(50)     NOT NULL,
-    Surname         varchar(50)     NOT NULL,
-    DateOfBirth     datetime        NOT NULL,
+--    % is a wildcard for zero or more characters (letter, digit, or other character)
+--    _ is a wildcard for a single character (letter, digit, or other character)
+--   [] are used to represent a range or set of characters that are allowed  
+    Surname         varchar(50)
+		CONSTRAINT CK_Students_Surname
+			CHECK (Surname LIKE '__%')       -- LIKE allows us to do a "pattern-match" of values
+--OR        CHECK (Surname LIKE '[a-z][a-z]%') -- two letters plus any other characters
+--								  \1/  \1/
+--			Positive match for 'Fred'
+--			Positive match for 'Wu'
+--			Positive match for 'F'
+--			Negative match for '2udor'
+							        NOT NULL,
+    DateOfBirth     datetime
+		CONSTRAINT CK_Students_DateOfBirth
+			CHECK (DateOfBirth < GETDATE()) -- GETDATE is a function to get the current date
+							        NOT NULL,
     Enrolled        bit             
         CONSTRAINT DF_Students_Enrolled
             DEFAULT (1)             NOT NULL
