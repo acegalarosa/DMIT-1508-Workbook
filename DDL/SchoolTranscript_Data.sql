@@ -15,8 +15,15 @@ VALUES ('Ace', 'Galarosa', '19900912 10:34:09 AM'),
 
 SELECT * FROM Students
 
+/* 
 INSERT INTO Students(GivenName, Surname, DateOfBirth) -- notice no Enrolled column
-VALUES ('Ace', 'Ga', '19900912 10:34:09 AM')
+VALUES ('Ace', 'G', '19900912 10:34:09 AM')
+*/
+
+SELECT  Number, [Name], Credits, [Hours]
+FROM	Courses
+WHERE   [Name] LIKE '%Fundamentals%'
+
 
 
 
