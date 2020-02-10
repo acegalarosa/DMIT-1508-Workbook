@@ -18,7 +18,13 @@ SELECT * FROM Students
 INSERT INTO Students(GivenName, Surname, DateOfBirth) -- notice no Enrolled column
 VALUES ('Ace', 'Ga', '19900912 10:34:09 AM')
 
-SELECT * FROM Courses
+
 
 INSERT INTO Courses(Number, [Name], Credits, [Hours], Cost)
-VALUES ('1508', 'Database Fundamentals', '3', '30', '900')
+VALUES ('DMIT-1508', 'Database Fundamentals', 3.0, 60, 750),
+	   ('CPSC-1012', 'Programming Fundamentals', 3.0, 60, 750),
+	   ('DMIT-1720', 'OOP Fundamentals', 3.0, 60, 750),
+	   ('DMIT-2210', 'Agile Development', 4.5, 90, 850),
+	   ('DMIT-1718', 'Software Testing', 4.5, 90, 850)
+
+SELECT * FROM Courses	   

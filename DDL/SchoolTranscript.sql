@@ -147,3 +147,13 @@ CREATE TABLE Invoice
 	Total			AS Subtotal + GST      -- This is a Computed Column
 )
 
+
+
+/* NOTES
+SELECT - The data/columns to retrieve
+FROM - The table(s) to search
+WHERE - Filters to apply in the search
+GROUP BY - Re-organizing Results into groups
+HAVING - Filter for grouping
+ORER BY - Sorting results 
+*/
