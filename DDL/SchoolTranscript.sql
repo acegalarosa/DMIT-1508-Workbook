@@ -153,7 +153,7 @@ CREATE TABLE Invoice
 SELECT - The data/columns to retrieve
 FROM - The table(s) to search
 WHERE - Filters to apply in the search
-GROUP BY - Re-organizing Results into groups
-HAVING - Filter for grouping
+GROUP BY - Re-organizing Results into groups (Aggregation) e.g. getting the average, sum etc.
+HAVING - Filter for grouping  (Aggregation) e.g. getting the average, sum etc.
 ORER BY - Sorting results 
 */
