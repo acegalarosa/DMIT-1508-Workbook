@@ -35,3 +35,13 @@ VALUES ('DMIT-1508', 'Database Fundamentals', 3.0, 60, 750),
 	   ('DMIT-1718', 'Software Testing', 4.5, 90, 850)
 
 SELECT * FROM Courses	   
+
+-- Write a query to get the first/last names of all students
+-- whose last name starts with a "G"
+
+SELECT StudentID, GivenName, Surname, DateOfBirth
+FROM Students
+WHERE Surname LIKE 'G%'
+
+DELETE FROM Students
+
