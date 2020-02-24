@@ -11,7 +11,7 @@ SELECT  'Dan' + ' ' + 'Gilleland', 18 * 52, '5' + '10'
 
 -- Specify a column name with some hard-code/calculated values
 SELECT  'Dan' + ' ' + 'Gilleland' AS 'Instructor',
-        19 * 52 AS 'Weeks at the job'
+        20 * 52 AS 'Weeks at the job'
 
 -- Let's use the SELECT statement with database tables
 
@@ -78,10 +78,19 @@ WHERE  PositionID = 3
 SELECT  PositionID, PositionDescription
 FROM    Position
 
+-- 5.b Given that the Instructor position id is 4, write a query to get the names of all the Instructors from the Staff table.
+SELECT FirstName, LastName
+FROM   Staff
+WHERE  PositionID = 4
+
 --6.    Select the Course Names whose course hours are less than 96
 SELECT  C.CourseName
 FROM    Course C -- I can have an alias to the table name
 WHERE   C.CourseHours < 96
+--Real-time type with me...
+SELECT	S.FirstName, S.LastName, S.Province
+FROM	Student AS S
+
 -- Type with me the following...
 SELECT  ST.LastName, ST.DateHired, ST.DateReleased
 FROM    Staff AS ST -- The use of the AS keyword in producing table/column aliases is optional
@@ -105,6 +114,10 @@ FROM    Registration
 WHERE   WithdrawYN IS NULL -- we use IS NULL instead of = NULL, because = NULL won't work.
 
 -- 7.b. Select the student ids of students who have withdrawn from a course
+/*
+Explore the database - you can use the * for a Quick and Dirty check
+SELECT * FROM Registration
+*/
 SELECT  StudentID
 FROM    Registration
 WHERE   WithdrawYN = 'Y'
@@ -115,6 +128,7 @@ SELECT  R.StudentID, R.CourseId, R.Mark
 FROM    Registration R
 WHERE   R.Mark BETWEEN 70 AND 80
   AND   (R.CourseId = 'DMIT223' OR R.CourseId = 'DMIT168')
+
 -- alternate answer to #8
 SELECT  R.StudentID, R.CourseId, R.Mark
 FROM    Registration R
