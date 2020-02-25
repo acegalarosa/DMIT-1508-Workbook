@@ -39,15 +39,15 @@ ORDER BY 'Staff Full Name', CourseId
 --3.	Select all the Club ID's and the Student full names that are in them
 -- TODO: Student Answer Here...
 SELECT  ClubId, FirstName + ' ' + LastName AS 'Student Full Name'
-FROM    Activity A
+FROM    Activity AS A
     INNER JOIN Student S ON A.StudentID = S.StudentID
 
 --4.	Select the Student full name, courseID's and marks for studentID 199899200.
 SELECT  S.FirstName + ' ' + S.LastName AS 'Student Name',
         R.CourseId,
         R.Mark
-FROM    Registration R
-    INNER JOIN Student S
+FROM    Registration AS R
+    INNER JOIN Student AS S
             ON S.StudentID = R.StudentID
 WHERE   S.StudentID = 199899200
 
@@ -82,7 +82,7 @@ SELECT  FirstName + ' ' + LastName AS 'Student',
         CourseName
 --        , S.StudentID -- Used for WHERE clause
 --        , R.Semester  -- Used for WHERE clause
-FROM    Student S
+FROM    Student AS S
     INNER JOIN Registration R ON S.StudentID = R.StudentID
     INNER JOIN Course C       ON R.CourseId = C.CourseId
 WHERE   S.StudentID = 199912010
@@ -90,7 +90,24 @@ WHERE   S.StudentID = 199912010
 
 --9. What are the Student Names, courseID's with individual Marks at 80% or higher? Sort the results by course.
 -- TODO: Student Answer Here...
+SELECT    FirstName + ' ' + LastName AS 'Student',
+	      CourseID,
+	      Mark
+FROM      Student AS S
+	   INNER JOIN Registration AS R ON S.StudentID = R.StudentID
+WHERE     R.Mark >= 80
+ORDER BY  CourseID
 
 --10. Modify the script from the previous question to show the Course Name along with the ID.
 -- TODO: Student Answer Here...
+SELECT    FirstName + ' ' + LastName AS 'Student',
+	      R.CourseID,
+		  CourseName,
+	      Mark
+		  
+FROM      Student AS S
+	   INNER JOIN Registration AS R ON S.StudentID = R.StudentID
+	   INNER JOIN Course AS C ON R.CourseID = C.CourseID
+WHERE     R.Mark >= 80
+ORDER BY  R.CourseID
 
