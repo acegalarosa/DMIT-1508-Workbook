@@ -98,17 +98,18 @@ FROM   Course
 
 -- 7. Select the characters in the position description from characters 8 to 13 for PositionID 5
 SELECT SUBSTRING (PositionDescription, 8, 6) AS 'Position Description'
-FROM Position
+FROM   Position
 
 
 -- 8. Select all the Student First Names as upper case.
 SELECT UPPER (FirstName) AS 'Student First Name'
-FROM Student
+FROM   Student
 
 
 -- 9. Select the First Names of students whose first names are 3 characters long.
-SELECT DISTINCT (FirstName) AS 'Student First Name'
-FROM Student
+SELECT DISTINCT 
+	  (FirstName) AS 'Student First Name'
+FROM  Student
 WHERE FirstName LIKE '___'
 
 
