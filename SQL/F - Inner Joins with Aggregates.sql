@@ -81,5 +81,3 @@ GROUP BY PaymentTypeDescription
 GROUP BY C.ClubName
 HAVING COUNT(StudentID) >= 3
 
-SELECT * FROM Club
-SELECT * FROM Activity
