@@ -156,15 +156,15 @@ WHERE StudentID IN
                   (SELECT StudentID
 				  FROM Registration
 				  GROUP BY StudentID
-				  HAVING AVG(Mark) >= ALL
+				  HAVING AVG(Mark) >= ALL 
 										  (SELECT AVG(Mark)
 										  FROM Registration
+										  WHERE Mark IS NOT NULL
 										  GROUP BY StudentID))
 				
 				  
 
 			
-
 
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.

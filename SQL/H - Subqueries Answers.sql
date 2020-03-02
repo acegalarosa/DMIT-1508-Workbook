@@ -12,6 +12,15 @@ WHERE   ClubID = (SELECT ClubID FROM Club
                   WHERE ClubName = 'Association of Computing Machinery')
 
 -- 2.b. Select the names of all the students in the 'Association of Computing Machinery' club. Use a subquery for your answer. When you make your answer, ensure the outmost query only uses the Student table in its FROM clause.
+SELECT FirstName + ' ' + LastName AS 'Student Name'
+FROM   Student
+WHERE StudentID IN 
+				   (SELECT StudentID
+					FROM Activity
+					WHERE ClubID =
+					              (SELECT ClubID
+								   FROM Club
+			                       WHERE ClubName = 'Association of Computing Machinery'))
 
 --4. Select All the staff full names that taught DMIT172.
 -- TODO: Student Answer Here
@@ -33,6 +42,18 @@ WHERE CourseId = 'DMIT172'
 
 -- 10. Which student(s) have the highest average mark? Hint - This can only be done by a subquery.
 -- TODO: Student Answer Here...
+
+SELECT FirstName + ' ' + LastName AS 'Student Name'
+FROM Student
+WHERE StudentID IN 
+                  (SELECT StudentID
+				  FROM Registration
+				  GROUP BY StudentID
+				  HAVING AVG(Mark) >= ALL -- A number can't be GREATER THAN or EQUAL TO' a NULL value
+										  (SELECT AVG(Mark)
+										  FROM Registration
+										  WHERE Mark IS NOT NULL -- Ah, tricky!
+										  GROUP BY StudentID))
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
