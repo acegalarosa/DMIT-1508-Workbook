@@ -164,9 +164,6 @@ WHERE StudentID IN
 				
 				  
 
-			
-
-
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
 
