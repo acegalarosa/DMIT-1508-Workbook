@@ -166,6 +166,17 @@ WHERE StudentID IN
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
+SELECT CourseID AS 'Course ID',
+       CourseName 'Course Name',
+	   MaxStudents AS 'Max Class Size'
+FROM   Course
+GROUP BY CourseId, CourseName
+HAVING  MAX(MaxStudents) >= ALL
+
+(SELECT MAX(MaxStudents)
+FROM Course
+GROUP BY CourseId, CourseName)
+
 
 -- 12. Which course(s) are the most affordable? Show the course name and cost.
 -- TODO: Student Answer Here...
