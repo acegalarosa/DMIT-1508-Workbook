@@ -70,6 +70,16 @@ FROM    Course
 
 -- 13. Which staff have taught the largest classes? (Be sure to group registrations by course and semester.)
 -- TODO: Student Answer Here...
+SELECT DISTINCT FirstName + ' ' + LastName AS 'StaffName'
+      -- CourseID,
+	  -- COUNT(CourseID)
+FROM   Staff AS S
+    INNER JOIN Registration AS R
+	    ON S.StaffID = R.StaffID
+GROUP BY FirstName + ' ' + LastName, CourseID
+HAVING COUNT (CourseID) >= ALL (SELECT COUNT(CourseID)
+							    FROM   Registration	
+								GROUP BY StaffID, CourseID)
 
 -- 14. Which students are most active in the clubs?
 -- TODO: Student Answer Here...
