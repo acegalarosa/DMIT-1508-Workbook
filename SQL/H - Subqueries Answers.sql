@@ -39,10 +39,15 @@ WHERE CourseId = 'DMIT172'
 
 -- 9. What is the avg mark for each of the students from Edm? Display their StudentID and avg(mark)
 -- TODO: Student Answer Here...
+SELECT S.StudentID, AVG(Mark) AS 'Average Mark'
+FROM Student AS S
+    INNER JOIN Registration AS R
+	   ON S.StudentID = R.StudentID
+WHERE City = 'Edm'
+GROUP BY S.StudentID
 
 -- 10. Which student(s) have the highest average mark? Hint - This can only be done by a subquery.
 -- TODO: Student Answer Here...
-
 SELECT FirstName + ' ' + LastName AS 'Student Name'
 FROM Student
 WHERE StudentID IN 
@@ -57,6 +62,8 @@ WHERE StudentID IN
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
+SELECT  CourseId, CourseName, MaxStudents
+FROM    Course
 
 -- 12. Which course(s) are the most affordable? Show the course name and cost.
 -- TODO: Student Answer Here...

@@ -48,10 +48,20 @@ WHERE  City = 'Edm'
 -- 5. For each student that does not have a mark in the Registration table,
 --    create an update statement that gives each student a different mark.
 -- TODO: Student Answer Here....
+-- TIP - USE the RAND() function for a random number. E.g: -- SELECT floor(rand()*101) AS 'Mark'
+UPDATE Registration
+SET    Mark = (SELECT floor(rand()*101) AS 'Mark')
+WHERE  Mark IS NULL
+
 
 -- 6. Choose a student from the previous question and withdraw them from all
 --    their courses.
 -- TODO: Student Answer Here....
+UPDATE Registration
+SET WithdrawYN = 'Y'
+WHERE StudentID = '200312345'
+
+SELECT * FROM Registration
 
 /* The following statements expect the presence of a view called StudentGrades.
 IF OBJECT_ID('StudentGrades', 'V') IS NOT NULL
