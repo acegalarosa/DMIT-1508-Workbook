@@ -87,5 +87,6 @@ GO
 --7.  Using the StudentGrades view, update the  mark for studentID 199899200 in course dmit152 to be 90.
 -- TODO: Student Answer Here...
 
---8.  Using the StudentGrades view, delete the same record from the previous question.
+--8.  Using the StudentGrades view, see if you can delete the same record from the previous question.
+-- If it doesn't work, then copy the error message here.
 -- TODO: Student Answer Here...
