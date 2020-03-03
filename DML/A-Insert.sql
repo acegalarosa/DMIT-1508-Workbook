@@ -74,8 +74,26 @@ VALUES ('START', 'Small Tech And Research Teams'),
 -- 4. In your web browser, use https://randomuser.me/ to get information on three
 --    people to add as new students. Write separate insert statement for each new student.
 -- TODO: Student Answer Here....
+INSERT INTO Student(FirstName, LastName, Gender, StreetAddress, City, Province, PostalCode, Birthdate)
+VALUES ('Deanna', 'Knight', 'F', '1203 Woodland St', 'Edmonton', 'AB', 'T6W0K2', 1949-12-02)
+
+INSERT INTO Student(FirstName, LastName, Gender, StreetAddress, City, Province, PostalCode, Birthdate)
+VALUES ('Phyllis', 'Jennings', 'F', '6771 Westheimer Rd', 'Leduc', 'AB', 'T6P3Z3', 1951-01-01)
+
+INSERT INTO Student(FirstName, LastName, Gender, StreetAddress, City, Province, PostalCode, Birthdate)
+VALUES ('Kathryn', 'Pena', 'F', '2476 Blossom Hill Rd', 'Calgary', 'AB', 'T9A1N1', 1962-11-02)
 
 
 -- 5. Enroll each of the students you've added into the DMIT777 course.
 --    Use 'Dan Gilleland' as the instructor. At this point, their marks should be NULL.
 -- TODO: Student Answer Here....
+INSERT INTO Registration(StudentID, CourseId, Semester, StaffID)
+VALUES ('200978403', (SELECT CourseId FROM Course WHERE CourseId = 'DMIT777'), '2004J',(SELECT StaffID FROM Staff WHERE FirstName = 'Dan' AND LastName = 'Gilleland'))
+
+INSERT INTO Registration(StudentID, CourseId, Semester, StaffID)
+VALUES ('200978404', (SELECT CourseId FROM Course WHERE CourseId = 'DMIT777'), '2004J',(SELECT StaffID FROM Staff WHERE FirstName = 'Dan' AND LastName = 'Gilleland'))
+
+
+INSERT INTO Registration(StudentID, CourseId, Semester, StaffID)
+VALUES ('200978405', (SELECT CourseId FROM Course WHERE CourseId = 'DMIT777'), '2004J',(SELECT StaffID FROM Staff WHERE FirstName = 'Dan' AND LastName = 'Gilleland'))
+
