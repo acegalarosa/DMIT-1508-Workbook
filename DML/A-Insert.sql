@@ -97,3 +97,11 @@ VALUES ('200978404', (SELECT CourseId FROM Course WHERE CourseId = 'DMIT777'), '
 INSERT INTO Registration(StudentID, CourseId, Semester, StaffID)
 VALUES ('200978405', (SELECT CourseId FROM Course WHERE CourseId = 'DMIT777'), '2004J',(SELECT StaffID FROM Staff WHERE FirstName = 'Dan' AND LastName = 'Gilleland'))
 
+SELECT S.StudentId, S.FirstName, S.LastName, R.CourseId, C.CourseName, ST.StaffId, ST.FirstName, ST.LastName
+FROM Student AS S
+LEFT OUTER JOIN Registration AS R
+ON S.StudentID = R.StudentID
+LEFT OUTER JOIN Course AS C
+ON C.CourseId = R.CourseId
+LEFT OUTER JOIN Staff AS ST
+ON ST.StaffId = R.StaffId
