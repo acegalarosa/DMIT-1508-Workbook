@@ -62,8 +62,7 @@ WHERE StudentID IN
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
-SELECT  CourseId, CourseName, MaxStudents
-FROM    Course
+
 
 -- 12. Which course(s) are the most affordable? Show the course name and cost.
 -- TODO: Student Answer Here...
@@ -83,3 +82,10 @@ HAVING COUNT (CourseID) >= ALL (SELECT COUNT(CourseID)
 
 -- 14. Which students are most active in the clubs?
 -- TODO: Student Answer Here...
+SELECT FirstName + ' ' + LastName AS 'StudentName'
+      --, COUNT(A.ClubId)
+FROM Student AS S
+    INNER JOIN Activity AS A
+	   ON S.StudentID = A.StudentID
+GROUP BY FirstName + ' ' + LastName
+HAVING  COUNT(ClubId) >= ALL (SELECT COUNT(ClubId) FROM Activity GROUP BY StudentID)
