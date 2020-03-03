@@ -15,6 +15,11 @@ GO -- Execute the code up to this point as a single batch
     INSERT INTO TableName(Comma, Separated, ListOf, ColumnNames)
     VALUES ('A', 'Value', 'Per', 'Column'),
            ('Another', 'Row', 'Of', 'Values')
+
+	When inserting values, you can use subqueries for individual values provided that the subquesrt returns a single value.
+
+	INSERT ITO TableName(Comma, Separated, ListOf, ColumnNames)
+	VALUES ('A', (SELECT SingleValue FROM SomeTable), 'Per', 'Column')
     
     Another syntax for the INSERT statement is to use a SELECT clause in place
     of the VALUES clause. This is used for zero-to-many possible rows to insert.
@@ -29,6 +34,8 @@ GO -- Execute the code up to this point as a single batch
 INSERT INTO Course(CourseId, CourseName, CourseHours, CourseCost)
 VALUES ('DMIT777', 'Expert SQL', 90, 450.00)
 
+
+
 -- 2. Let's add a new staff member, someone who's really good at SQL
 -- SELECT * FROM STAFF
 INSERT INTO Staff(FirstName, LastName, DateHired, PositionID)
@@ -36,18 +43,22 @@ SELECT 'Dan', 'Gilleland', GETDATE(), PositionID
        --, PositionDescription
 FROM   Position
 WHERE  PositionDescription = 'Instructor'
+
 -- 2b. Let's get another instructor
 INSERT INTO Staff(FirstName, LastName, DateHired, PositionID)
 VALUES ('Shane', 'Bell', GETDATE(), 
         (SELECT PositionID
         FROM   Position
         WHERE  PositionDescription = 'Instructor'))
+
 -- 2.c. We have an open position in the staff.
 SELECT  PositionDescription
 FROM    Position
 WHERE   PositionID NOT IN (SELECT PositionID FROM Staff)
 --      Add Sheldon Murray as the new Assistant Dean.
 -- TODO: Student Answer Here....
+INSERT INTO Staff (FirstName, LastName, DateHired, PositionID)
+VALUES ('Sheldon', 'Murray', GETDATE(), (SELECT PositionID FROM Position WHERE PositionDescription = 'Assistant Dean'))
 
 -- 3. There are three additional clubs being started at the school:
 --      - START - Small Tech And Research Teams
