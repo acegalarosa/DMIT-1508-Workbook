@@ -1,5 +1,13 @@
 -- Stored Procedures (Sprocs)
 -- Validating Parameter Values
+-- We can validate parameter values using IF/ELSE statements. An IF/ELSE statement is called a "flow-control" statement because
+-- it controls whether or not another statement (or statement block) will execute. The grammar of the IF/ELSE statement is as follows:
+-- IF (Conditional_Expression)
+--   Statement-or-Statement-Block -- TRUE side
+-- ELSE
+--   Statement-or-Statement-Block -- FALSE side
+
+-- Where the Conditional_Expression is some kind of expression that will result in a value of TRUE or FALSE.
 
 USE [A01-School]
 GO
@@ -88,6 +96,7 @@ GO
 EXEC FindStudentClubs NULL  -- What do you predict the result will be?
 EXEC FindStudentClubs ''    -- What do you predict the result will be?
 GO
+
 ALTER PROCEDURE FindStudentClubs
     @PartialID      varchar(10)
 AS
@@ -170,6 +179,8 @@ AS
     IF @StudentId IS NULL OR @FirstName IS NULL OR @LastName IS NULL
         RAISERROR('All parameters are required.', 16, 1)
     ELSE IF NOT EXISTS (SELECT StudentID FROM Student WHERE StudentID = @StudentId)
+	    --The EXISTS() function will return true if there are 1 or more rows,
+		-- otherwise it will return false.
         RAISERROR('That student id does not exist', 16, 1)
     ELSE
         UPDATE  Student
