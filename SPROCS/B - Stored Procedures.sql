@@ -35,6 +35,12 @@ AS
 RETURN
 GO
 
+--Demo/Test my stored procedure
+EXEC AddClub 'CLUB', 'Central Library of Unused Books' -- Testing with "good" data
+-- Imagine that the stored procedure is called with !bad! data
+EXEC AddClub NULL, 'Gotcha'
+EXEC AddClub 'OOPS', NULL
+GO
 
 -- 1.b. Modify the AddClub procedure to ensure that the club name and id are actually supplied. Use the RAISERROR() function to report that this data is required.
 ALTER PROCEDURE AddClub
@@ -43,11 +49,15 @@ ALTER PROCEDURE AddClub
     @ClubName   varchar(50)
 AS
     -- Body of procedure here
+	-- I validate by finding out if the data is poor. If so, then I report the problem.
     IF @ClubId IS NULL OR @ClubName IS NULL
     BEGIN
         RAISERROR('Club ID and Name are required', 16, 1)
+		-- The 16 is the error number (we are basically constrained to a range of error numbers).
+		-- The 1 is the severity of the error
+		-- We can always use the 16, 1
     END
-    ELSE
+    ELSE -- Otherwise, I proceed to process the data.
     BEGIN
         INSERT INTO Club(ClubId, ClubName)
         VALUES (@ClubId, @ClubName)
