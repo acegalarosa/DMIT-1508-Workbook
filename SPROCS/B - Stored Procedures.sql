@@ -50,6 +50,7 @@ EXEC AddClub NULL, 'Gotcha'
 EXEC AddClub 'OOPS', NULL
 GO
 
+
 -- 1.b. Modify the AddClub procedure to ensure that the club name and id are actually supplied. Use the RAISERROR() function to report that this data is required.
 ALTER PROCEDURE AddClub
     -- Parameters here
@@ -96,6 +97,7 @@ GO
 EXEC FindStudentClubs NULL  -- What do you predict the result will be?
 EXEC FindStudentClubs ''    -- What do you predict the result will be?
 GO
+
 
 ALTER PROCEDURE FindStudentClubs
     @PartialID      varchar(10)
@@ -166,6 +168,11 @@ AS
         WHERE   StudentId = @StudentId 
     END   -- ...B }
 RETURN
+GO
+
+EXEC ChangeMailingAddress '199899200', 'B1 L7', 'Taytay',  'AB',  'T6W0K2'
+GO
+
 
 -- 4. Create a stored procedure that allows us to make corrections to a student's name. It should take in the student ID and the corrected name (first/last) of the student. Call the stored procedure CorrectStudentName. Validate that the student exists before attempting to change the name.
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'CorrectStudentName')
