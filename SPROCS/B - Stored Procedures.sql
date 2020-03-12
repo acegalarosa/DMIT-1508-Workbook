@@ -217,7 +217,10 @@ AS
 	  WHERE  StudentID = @StudentID
 RETURN
 GO
-   
+  
+EXEC RemoveFromClub '199912010'
+GO
+
 
 -- Query-based Stored Procedures
 -- 6. Create a stored procedure that will display all the staff and their position in the school.
