@@ -146,7 +146,7 @@ CREATE PROCEDURE LowNumbers
 AS
     -- Body of procedure here
     SELECT  C.CourseName
---           ,COUNT(R.StudentID) AS 'Enrollement Count'
+--         ,COUNT(R.StudentID) AS 'Enrollement Count'
     FROM    Course C
         LEFT OUTER JOIN Registration R ON C.CourseId = R.CourseId
     GROUP BY C.CourseName
@@ -163,6 +163,8 @@ AS
     --                                  GROUP BY CourseId)
 RETURN
 GO
+
+
 -- Run the above with the database as-is, and you will see five courses coming back.
 EXEC LowNumbers
 INSERT INTO Course(CourseId, CourseName, CourseHours, CourseCost, MaxStudents)
