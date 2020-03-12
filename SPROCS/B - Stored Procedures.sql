@@ -250,6 +250,7 @@ IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROC
 GO
 
 CREATE PROCEDURE FinalCourseMarks
+   @StudentID  int
 AS
    SELECT S.FirstName + ' ' + S.LastName AS 'Student Name',
           C.CourseID AS 'Course ID',
@@ -260,10 +261,13 @@ AS
 	    ON S.StudentID = R.StudentID
       INNER JOIN Course AS C
 	    ON C.CourseID = R.CourseID
+   WHERE S.StudentID = @StudentID
 RETURN
 GO
 
-EXEC FinalCourseMarks
+EXEC FinalCourseMarks '199899200'
+GO
+
 
 -- 8. Display the students that are enrolled in a given course on a given semester.
 --    Display the course name and the student's full name and mark.
@@ -272,20 +276,41 @@ IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROC
 GO
 
 CREATE PROCEDURE StudentsEnrolled
-    @FirstName varchar (25),
-	@LastName  varchar (25)
+    @CourseID  char(7),
+	@Semester  char(5)
 AS
-   SELECT C.CourseName AS 'Course Name',
-          S.FirstName + ' ' + S.LastName AS 'Student Name',
-		  R.Mark AS 'Mark'
-   FROM   Course AS C
-      INNER JOIN Registration AS R
-	    ON C.CourseID = R.CourseID
-	  INNER JOIN Student AS S
-	    ON S.StudentID = R.StudentID
+   IF @CourseID IS NULL OR @Semester IS NULL
+	   BEGIN
+		   RAISERROR('All parameters are required.', 16, 1)
+	   END
+
+   ELSE IF NOT EXISTS (SELECT CourseID FROM Registration WHERE CourseID = @CourseID)
+	   BEGIN
+		   RAISERROR('That CourseID does not exist', 16, 1)
+	   END
+
+   ELSE IF NOT EXISTS (SELECT Semester FROM Registration WHERE Semester = @Semester)
+	   BEGIN
+		   RAISERROR('That Semester does not exist', 16, 1)
+	   END
+
+   ELSE
+	   BEGIN
+		   SELECT C.CourseName AS 'Course Name',
+				  S.FirstName + ' ' + S.LastName AS 'Student Name',
+				  R.Mark AS 'Mark'
+		   FROM   Course AS C
+			  INNER JOIN Registration AS R
+				ON C.CourseID = R.CourseID
+			  INNER JOIN Student AS S
+				ON S.StudentID = R.StudentID
+		   WHERE R.CourseID = @CourseID AND R.Semester = @Semester
+	   END
 RETURN
 GO
 
-EXEC StudentsEnrolled
+EXEC StudentsEnrolled 'DMIT152', NULL
+GO
+
 
 -- 9. The school is running out of money! Find out who still owes money for the courses they are enrolled in.
