@@ -197,6 +197,7 @@ AS
 RETURN
 GO
 
+EXEC CorrectStudentName '199912010', 'Ace', 'Galarosa'
 
 
 -- 5. Create a stored procedure that will remove a student from a club. Call it RemoveFromClub.
