@@ -161,6 +161,8 @@ AS
         RAISERROR('ClubID is invalid/does not exist', 16, 1)
     END
     ELSE
+	-- The FALSE side of this IF statement above has to use a BEGIN/END block
+	-- because I want to execute more than 1 statement.
     BEGIN
         DELETE FROM Activity
         WHERE       ClubId = @ClubId
