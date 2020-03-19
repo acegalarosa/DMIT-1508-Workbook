@@ -252,16 +252,29 @@ GO
 CREATE PROCEDURE FinalCourseMarks
    @StudentID  int
 AS
-   SELECT S.FirstName + ' ' + S.LastName AS 'Student Name',
-          C.CourseID AS 'Course ID',
-		  C.CourseName AS 'CourseName',
-		  R.Mark AS 'Student Mark'
-   FROM   Student AS S
-      INNER JOIN Registration AS R
-	    ON S.StudentID = R.StudentID
-      INNER JOIN Course AS C
-	    ON C.CourseID = R.CourseID
-   WHERE S.StudentID = @StudentID
+	IF @StudentID IS NULL
+		BEGIN
+			 RAISERROR('Student ID is required', 16, 1)
+		END
+
+    ELSE IF NOT EXISTS (SELECT StudentID FROM Student WHERE StudentID = @StudentID)
+		BEGIN
+			 RAISERROR('Student ID does not exist', 16, 1)
+		END
+
+    ELSE
+	    BEGIN
+		   SELECT S.FirstName + ' ' + S.LastName AS 'Student Name',
+				  C.CourseID AS 'Course ID',
+				  C.CourseName AS 'CourseName',
+				  R.Mark AS 'Student Mark'
+		   FROM   Student AS S
+			  INNER JOIN Registration AS R
+				ON S.StudentID = R.StudentID
+			  INNER JOIN Course AS C
+				ON C.CourseID = R.CourseID
+		   WHERE S.StudentID = @StudentID
+        END
 RETURN
 GO
 
@@ -309,8 +322,35 @@ AS
 RETURN
 GO
 
-EXEC StudentsEnrolled 'DMIT152', NULL
+EXEC StudentsEnrolled 'DMIT152', '2004J'
 GO
 
 
 -- 9. The school is running out of money! Find out who still owes money for the courses they are enrolled in.
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StudentsWithBalance')
+    DROP PROCEDURE StudentsWithBalance
+GO
+
+CREATE PROCEDURE StudentsWithBalance
+	@CourseID   char(7)
+AS
+
+	IF @CourseID IS NULL
+		BEGIN
+			 RAISERROR('Course ID is required', 16, 1)
+		END
+
+    ELSE IF NOT EXISTS (SELECT CourseID FROM Registration WHERE CourseID = @CourseID)
+		BEGIN
+			 RAISERROR('Course ID does not exist', 16, 1)
+		END
+
+    ELSE
+	    BEGIN
+		    SELECT S.FirstName + ' ' + S.LastName AS 'Student Name'
+			FROM Student AS S
+			WHERE S.BalanceOwing > 0
+        END
+
+EXEC StudentsWithBalance 'DMIT152'
