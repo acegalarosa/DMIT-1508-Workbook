@@ -14,7 +14,54 @@ WHERE   Mark BETWEEN 70 AND 80 -- BETWEEN is inclusive
 --      one for the upper value and one for the lower value.
 --      Call the stored procedure ListStudentMarksByRange
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'ListStudentMarksByRange')
+    DROP PROCEDURE ListStudentMarksByRange
+GO
 
+CREATE PROCEDURE ListStudentMarksByRange
+	@lower   decimal,
+	@upper   decimal
+
+AS
+	IF @lower IS NULL OR @upper IS NULL
+	  BEGIN
+		 RAISERROR('Lower and Upper values are required and cannot be null', 16, 1)
+	  END
+
+	ELSE IF @lower > @upper
+	  BEGIN
+         RAISERROR('The lower limit cannot be larger than the upper limit', 16, 1)
+	  END
+
+    ELSE IF @lower < 0
+	  BEGIN
+         RAISERROR('The lower limit cannot be less than zero', 16, 1)
+	  END
+
+    ELSE IF @upper > 100
+	  BEGIN
+         RAISERROR('The upper limit cannot be greater than 100', 16, 1)
+	  END
+
+    ELSE
+	  BEGIN
+         SELECT  StudentID, CourseId, Mark
+         FROM    Registration
+         WHERE   Mark BETWEEN @lower AND @upper
+      END
+RETURN
+GO
+
+-- Testing
+--  Good inputs
+EXEC ListStudentMarksByRange 70, 80
+--  Bad inputs
+EXEC ListStudentMarksByRange 80, 70
+EXEC ListStudentMarksByRange 70, NULL
+EXEC ListStudentMarksByRange NULL, 80
+EXEC ListStudentMarksByRange NULL, NULL
+EXEC ListStudentMarksByRange -5, 80
+EXEC ListStudentMarksByRange 70, 101 
 /* ----------------------------------------------------- */
 
 -- 2.   Selects the Staff full names and the Course ID's they teach.
@@ -27,6 +74,9 @@ FROM    Staff S
 ORDER BY 'Staff Full Name', CourseId
 --      Place this in a stored procedure called CourseInstructors.
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'CourseInstructors')
+    DROP PROCEDURE CourseInstructors
+GO
 
 /* ----------------------------------------------------- */
 
