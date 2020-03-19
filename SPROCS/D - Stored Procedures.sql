@@ -144,7 +144,7 @@ GO
 EXEC LookupClubMembers 'CHESS'
 EXEC LookupClubMembers 'CSS'
 EXEC LookupClubMembers 'Drop Out'
-EXEC LookupClubMembers 'NASA1'
+EXEC LookupClubMembers 'NASA1' -- Although this returns zero rows, it's a valid result for this SPROC
 EXEC LookupClubMembers NULL
 
 -- 3) Create a stored procedure called RemoveClubMembership that takes a club ID and deletes all the members of that club. Be sure that the club exists. Also, raise an error if there were no members deleted from the club.
