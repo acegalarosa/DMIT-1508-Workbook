@@ -223,6 +223,16 @@ AS
 RETURN
 
 GO
+--Test RegisterStudent
+--SELECT * FROM Registration -- 2004J, 'DMIT152'
+--SELECT * FROM Student
+--SELECT * FROM Course WHERE CourseID = 'DMIT152'
+EXEC RegisterStudent 199912010, 'DMIT152', '2004J'
+EXEC RegisterStudent 199966250, 'DMIT152', '2004J'
+EXEC RegisterStudent 200011730, 'DMIT152', '2004J'
+EXEC RegisterStudent 200122100, 'DMIT152', '2004J'
+
+EXEC RegisterStudent 2000312345, 'DMIT152', '2004J'
 
 -- 4. Add a stored procedure called WitnessProtection that erases all existence of a student from the database. The stored procedure takes the StudentID, first and last names, gender, and birthdate as parameters. Ensure that the student exists in the database before removing them (all the parameter values must match).
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'WitnessProtection')
