@@ -227,11 +227,13 @@ GO
 --SELECT * FROM Registration -- 2004J, 'DMIT152'
 --SELECT * FROM Student
 --SELECT * FROM Course WHERE CourseID = 'DMIT152'
+
+--We already have one student in this class/semester, let's add 4 more
 EXEC RegisterStudent 199912010, 'DMIT152', '2004J'
 EXEC RegisterStudent 199966250, 'DMIT152', '2004J'
 EXEC RegisterStudent 200011730, 'DMIT152', '2004J'
 EXEC RegisterStudent 200122100, 'DMIT152', '2004J'
-
+--There is maximun of 5 students in this course, so the following should produce an error.
 EXEC RegisterStudent 2000312345, 'DMIT152', '2004J'
 
 
@@ -441,7 +443,7 @@ GO
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'ArchiveGrade')
     DROP TABLE ArchiveGrade
 
-CREATE TABLE ArchiveGrade
+CREATE TABLE ArchiveGrade -- fairly simple - no PKs, no FKs, no CHECK
 (
     StudentID        int,
     CourseId        char (7),

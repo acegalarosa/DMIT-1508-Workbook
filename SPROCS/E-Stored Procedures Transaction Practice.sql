@@ -1,4 +1,4 @@
---Practive Transactions
+--Practice Transactions
 USE [A01-School]
 GO
 
