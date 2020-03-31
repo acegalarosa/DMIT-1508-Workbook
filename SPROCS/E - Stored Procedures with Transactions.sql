@@ -226,7 +226,6 @@ AS
         END
     END
 RETURN
-
 GO
 --Test RegisterStudent
 --SELECT * FROM Registration -- 2004J, 'DMIT152'
@@ -317,6 +316,10 @@ AS
     END
 RETURN
 GO
+
+SELECT * FROM Student
+EXEC WitnessProtection 198933540, 'Winnie', 'Woo', 'F','1978-11-04 00:00:00' -- good data
+EXEC WitnessProtection 199912010, 'Dave', 'Brown', 'F', '1976-01-02 00:00:00' -- wrong gender
 
 -- 5. Create a procedure called StudentPayment that accepts Student ID and paymentamount as parameters. Add the payment to the payment table and adjust the students balance owing to reflect the payment.
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StudentPayment')
