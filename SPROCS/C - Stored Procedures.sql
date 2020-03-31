@@ -173,6 +173,26 @@ HAVING COUNT(PaymentType.PaymentTypeID) >= ALL (SELECT COUNT(PaymentTypeID)
                                                 GROUP BY PaymentTypeID)
 --      Place this in a stored procedure called MostFrequentPaymentTypes.
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'MostFrequentPaymentTypes')
+    DROP PROCEDURE MostFrequentPaymentTypes
+GO
+
+CREATE PROCEDURE MostFrequentPaymentTypes
+AS
+	SELECT PaymentTypeDescription
+	FROM   Payment 
+    INNER JOIN PaymentType 
+        ON Payment.PaymentTypeID = PaymentType.PaymentTypeID
+	GROUP BY PaymentType.PaymentTypeID, PaymentTypeDescription 
+	HAVING COUNT(PaymentType.PaymentTypeID) >= ALL (SELECT COUNT(PaymentTypeID)
+													FROM Payment 
+													GROUP BY PaymentTypeID)
+RETURN
+GO
+
+EXEC MostFrequentPaymentTypes
+GO
+
 /* ----------------------------------------------------- */
 
 -- 6.   Selects the current staff members that are in a particular job position.
@@ -182,6 +202,24 @@ FROM    Position P
 WHERE   DateReleased IS NULL
   AND   PositionDescription = 'Instructor'
 --      Place this in a stored procedure called StaffByPosition
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StaffByPosition')
+    DROP PROCEDURE StaffByPosition
+GO
+
+CREATE PROCEDURE StaffByPosition
+AS
+	SELECT  FirstName + ' ' + LastName AS 'StaffFullName'
+	FROM    Position P
+	 INNER JOIN Staff S ON S.PositionID = P.PositionID
+	WHERE   DateReleased IS NULL
+			AND  PositionDescription = 'Instructor'
+RETURN
+GO
+
+EXEC StaffByPosition
+GO
+
 
 /* ----------------------------------------------------- */
 
@@ -194,4 +232,32 @@ WHERE   DateReleased IS NULL
   AND   CourseId = 'DMIT101'
 --      This select should also accommodate inputs with wildcards. (Change = to LIKE)
 --      Place this in a stored procedure called StaffByCourseExperience
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StaffByCourseExperience')
+    DROP PROCEDURE StaffByCourseExperience
+GO
+
+CREATE PROCEDURE StaffByCourseExperience
+	@CourseID varchar(40)
+AS
+	IF @CourseID IS NULL
+	BEGIN
+		RAISERROR('The Course ID cannot be NULL', 16, 1)
+	END
+	ELSE IF NOT EXISTS (SELECT CourseID FROM Registration WHERE CourseID = @CourseID)
+	BEGIN
+		RAISERROR('The Course ID does not exist', 16, 1)
+	END
+	ELSE
+		SELECT  DISTINCT FirstName + ' ' + LastName AS 'StaffFullName',	CourseId
+		FROM    Registration R
+		 INNER JOIN Staff S
+		   ON S.StaffID = R.StaffID
+		WHERE  DateReleased IS NULL
+			   AND CourseId LIKE @CourseID
+RETURN
+GO
+
+EXEC StaffByCourseExperience 'DMIT152'
+GO
 
