@@ -137,6 +137,28 @@ WHERE   CourseName LIKE '%programming%'
 --      The parameter should be called @PartialName.
 --      Do NOT assume that the '%' is part of the value in the parameter variable.
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'FindCourse')
+    DROP PROCEDURE FindCourse
+GO
+
+CREATE PROCEDURE FindCourse
+	@PartialName varchar(40)
+AS
+	IF @PartialName IS NULL
+	BEGIN
+		RAISERROR('The Partial Name Cannot be NULL', 16, 1)
+	END
+	ELSE
+	BEGIN
+		SELECT  CourseId, CourseName
+		FROM    Course
+		WHERE   CourseName LIKE '%' + @PartialName + '%'
+	END
+RETURN
+GO
+
+EXEC FindCourse 'programming'
+GO
 
 /* ----------------------------------------------------- */
 
