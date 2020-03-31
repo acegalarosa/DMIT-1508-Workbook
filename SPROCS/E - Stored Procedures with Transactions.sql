@@ -508,3 +508,5 @@ AS
 RETURN
 GO
 
+EXEC ArchiveStudentGrades '2004'
+GO
