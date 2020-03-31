@@ -328,29 +328,17 @@ GO
 
 -- 9. The school is running out of money! Find out who still owes money for the courses they are enrolled in.
 
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StudentsWithBalance')
-    DROP PROCEDURE StudentsWithBalance
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'ListOutstandingBalances')
+    DROP PROCEDURE ListOutstandingBalances
+GO
+CREATE PROCEDURE ListOutstandingBalances
+AS
+    SELECT  FirstName + ' ' + LastName AS 'Student', BalanceOwing
+    FROM    Student
+    WHERE   BalanceOwing > 0
+
+RETURN
 GO
 
-CREATE PROCEDURE StudentsWithBalance
-	@CourseID   char(7)
-AS
+EXEC ListOutstandingBalances
 
-	IF @CourseID IS NULL
-		BEGIN
-			 RAISERROR('Course ID is required', 16, 1)
-		END
-
-    ELSE IF NOT EXISTS (SELECT CourseID FROM Registration WHERE CourseID = @CourseID)
-		BEGIN
-			 RAISERROR('Course ID does not exist', 16, 1)
-		END
-
-    ELSE
-	    BEGIN
-		    SELECT S.FirstName + ' ' + S.LastName AS 'Student Name'
-			FROM Student AS S
-			WHERE S.BalanceOwing > 0
-        END
-
-EXEC StudentsWithBalance 'DMIT152'

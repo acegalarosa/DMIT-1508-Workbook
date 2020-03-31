@@ -164,6 +164,10 @@ AS
 RETURN
 GO
 
+SELECT* FROM Course AS C
+LEFT OUTER JOIN Registration AS R
+ ON R.CourseID = C.CourseID
+
 
 -- Run the above with the database as-is, and you will see five courses coming back.
 EXEC LowNumbers

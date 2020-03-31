@@ -78,6 +78,20 @@ IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROC
     DROP PROCEDURE CourseInstructors
 GO
 
+CREATE PROCEDURE CourseInstructors
+AS
+	SELECT  DISTINCT -- The DISTINCT keyword will remove duplate rows from the results
+			FirstName + ' ' + LastName AS 'Staff Full Name',
+			CourseId
+	FROM    Staff S
+		INNER JOIN Registration R
+			ON S.StaffID = R.StaffID
+	ORDER BY 'Staff Full Name', CourseId  
+RETURN
+GO
+
+EXEC CourseInstructors
+GO
 /* ----------------------------------------------------- */
 
 -- 3.   Selects the students first and last names who have last names starting with S.
@@ -89,7 +103,30 @@ WHERE   LastName LIKE 'S%'
 --      Do NOT assume that the '%' is part of the value in the parameter variable;
 --      Your solution should concatenate the @PartialName with the wildcard.
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'FindStudentByLastName')
+    DROP PROCEDURE FindStudentByLastName
+GO
 
+CREATE PROCEDURE FindStudentByLastName
+    @PartialName  varchar(35)
+AS
+	IF @PartialName IS NULL
+	BEGIN
+		RAISERROR('The Partial Name cannot be NULL', 16, 1)
+	END
+	ELSE
+	BEGIN
+		SELECT  FirstName, LastName
+		FROM    Student
+		WHERE   LastName LIKE @PartialName + '%'
+	END
+RETURN
+GO
+
+EXEC FindStudentByLastName 'S'
+GO
+
+SELECT LastName FROM Student
 /* ----------------------------------------------------- */
 
 -- 4.   Selects the CourseID's and Coursenames where the CourseName contains the word 'programming'.
