@@ -365,6 +365,9 @@ AS
 RETURN
 GO
 
+EXEC StudentPayment 199912010, 100.00, 1
+GO
+
 -- 6. Create a stored procedure called WithdrawStudent that accepts a StudentID, CourseId, and semester as parameters. Withdraw the student by updating their Withdrawn value to 'Y' and subtract 1/2 of the cost of the course from their balance. If the result would be a negative balance set it to 0.
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'WithdrawStudent')
     DROP PROCEDURE WithdrawStudent
