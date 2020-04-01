@@ -41,4 +41,4 @@ AS
     END
 RETURN
 GO
-EXEC GuessRows 5
+EXEC GuessRows 9
