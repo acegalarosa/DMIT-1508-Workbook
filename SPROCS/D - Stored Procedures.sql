@@ -249,7 +249,5 @@ GO
 
 SELECT * FROM Student
 
-EXEC LookupStudent 'oo'
-EXEC LookupStudent ''
-EXEC LookupStudent NULL
+EXEC LookupStudent 'W'
 
